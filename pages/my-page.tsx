@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getStaticProps() {
-  const response = await axios.get('http://localhost:8090/');
+  const response = await axios.get('http://3.144.216.66/');
   const data = response.data;
   return {
     props: {
