@@ -10,7 +10,7 @@ jobs:
   pull_and_run:
     runs-on: self-hosted
 
-    steps:
+    steps: 
       - name: Pull Docker Image
         run: sudo docker pull rijanacharya100/bookfrontend:latest
       - name: Delete Old docker container
