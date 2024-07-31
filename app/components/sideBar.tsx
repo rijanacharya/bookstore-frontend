@@ -10,8 +10,8 @@ const SideBar = () => {
     const toggleNonfiction = () => setIsNonfictionOpen(!isNonfictionOpen);
 
     return (
-        <nav className="bg-gray-800 text-white fixed h-full z-50 hidden md:block">
-            <div className="flex flex-col h-full p-4">
+        <nav className="bg-gray-800 text-white w-44">
+            <div className="flex flex-col  p-4">
                 <h2 className="text-white font-bold">Categories</h2>
                 <ul>
                     <li className="cursor-pointer flex items-center" onClick={toggleFiction}>
