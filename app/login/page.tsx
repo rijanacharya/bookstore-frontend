@@ -15,7 +15,6 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <NavigationBar />
       <div className="flex-grow flex items-center justify-center">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 bg-white rounded shadow-md">
           <h1 className="text-2xl font-bold mb-4">Login</h1>

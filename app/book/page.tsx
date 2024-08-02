@@ -1,29 +1,49 @@
-'use client';
-import useSWR from 'swr'
- 
-const fetcher = (...args: [RequestInfo, RequestInit?]): Promise<any> => 
-    fetch(...args).then((res) => res.json());
+// Import SingleBook component
+import SingleBook from '../components/SingleBook';
+import { Book } from '../components/SingleBook';
 
-function Profile() {
-  const { data, error } = useSWR('http://localhost:8090/api/book/', fetcher, { refreshInterval: 1000 })
- 
-  if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
-  console.log(data)
- 
+// Import next/link and getServerSideProps
+import Link from 'next/link';
+
+interface AllBooksProps {
+  books: Book[];
+}
+
+async function getData() {
+  const res = await fetch('http://localhost:8090/api/v1/book/books')
+  const books = await res.json()
+  const booksWithImages = books.map((book: Book) => ({
+    ...book,
+    imageUrl: `http://localhost:8090/api/v1/book/books/${book.id}/image`
+  }))
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data')
+  }
+
+
+  return booksWithImages
+}
+
+export default async function Page() {
+  const books = await getData()
+
   return (
     <div>
-            <ul>
-                {data.map((Book :any) => (
-                    <li key={Book.id}>
-                         <hr/>
-                        id: {Book.id} <br/>
-                        name : {Book.name} <br/>
-                        Aauthor: {Book.author} <br/>
-                        </li>
-                ))}
-            </ul>
+      <h1>All Books</h1>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {books.map((book: Book) => (
+          <Link key={book.id} href={`/book/${book.id}`}>
+            <SingleBook book={book} />
+          </Link>
+        ))}
+
+      </div>
     </div>
   )
 }
-export default Profile
+
+
+
